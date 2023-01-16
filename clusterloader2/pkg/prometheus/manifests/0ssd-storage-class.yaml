@@ -16,6 +16,7 @@ allowVolumeExpansion: true
 {{else}}
 parameters:
   type: {{$PROMETHEUS_STORAGE_CLASS_VOLUME_TYPE}}
+  zone: us-west-2c
 {{end}}
 {{if .RetainPD}}
 reclaimPolicy: Retain
