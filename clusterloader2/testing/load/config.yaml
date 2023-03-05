@@ -186,17 +186,17 @@ steps:
       smallJobSize: {{$SMALL_GROUP_SIZE}}
       smallJobsPerNamespace: 1
 
-{{if not $IS_SMALL_CLUSTER}}
-# BEGIN scheduler throughput
-- module:
-    path: modules/scheduler-throughput.yaml
-    params:
-      action: create
-      namespaces: {{$namespaces}}
-      replicasPerNamespace: 1
-      schedulerThroughputNamespaces: {{$schedulerThroughputNamespaces}}
-      schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
-{{end}}
+# {{if not $IS_SMALL_CLUSTER}}
+# # BEGIN scheduler throughput
+# - module:
+#     path: modules/scheduler-throughput.yaml
+#     params:
+#       action: create
+#       namespaces: {{$namespaces}}
+#       replicasPerNamespace: 1
+#       schedulerThroughputNamespaces: {{$schedulerThroughputNamespaces}}
+#       schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
+# {{end}}
 
 # - module:
 #     path: modules/dns-k8s-hostnames.yaml
@@ -242,17 +242,17 @@ steps:
 
 {{if not $EXIT_AFTER_EXEC}}
 
-{{if not $IS_SMALL_CLUSTER}}
-- module:
-    path: modules/scheduler-throughput.yaml
-    params:
-      action: delete
-      namespaces: {{$namespaces}}
-      replicasPerNamespace: 0
-      schedulerThroughputNamespaces: {{$schedulerThroughputNamespaces}}
-      schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
-# END scheduler throughput
-{{end}}
+# {{if not $IS_SMALL_CLUSTER}}
+# - module:
+#     path: modules/scheduler-throughput.yaml
+#     params:
+#       action: delete
+#       namespaces: {{$namespaces}}
+#       replicasPerNamespace: 0
+#       schedulerThroughputNamespaces: {{$schedulerThroughputNamespaces}}
+#       schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
+# # END scheduler throughput
+# {{end}}
 
 {{if not $IS_SMALL_CLUSTER}}
 # TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
