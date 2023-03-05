@@ -198,8 +198,8 @@ steps:
       schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
 {{end}}
 
-- module:
-    path: modules/dns-k8s-hostnames.yaml
+# - module:
+#     path: modules/dns-k8s-hostnames.yaml
 
 {{if $EXEC_COMMAND}}
 
