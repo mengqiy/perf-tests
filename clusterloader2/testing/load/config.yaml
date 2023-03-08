@@ -254,49 +254,49 @@ steps:
 # # END scheduler throughput
 # {{end}}
 
-{{if not $IS_SMALL_CLUSTER}}
-# TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
-- module:
-    path: modules/pod-startup-latency.yaml
-    params:
-      namespaces: {{$namespaces}}
-      minPodsInSmallCluster: {{$MIN_PODS_IN_SMALL_CLUSTERS}}
-      image: {{$latencyPodImage}}
-{{end}}
+# {{if not $IS_SMALL_CLUSTER}}
+# # TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
+# - module:
+#     path: modules/pod-startup-latency.yaml
+#     params:
+#       namespaces: {{$namespaces}}
+#       minPodsInSmallCluster: {{$MIN_PODS_IN_SMALL_CLUSTERS}}
+#       image: {{$latencyPodImage}}
+# {{end}}
 
-- module:
-    path: /modules/reconcile-objects.yaml
-    params:
-      actionName: "scale and update"
-      namespaces: {{$namespaces}}
-      {{if $RATE_LIMIT_POD_CREATION}}
-      tuningSet: RandomizedScalingTimeLimited
-      operationTimeout: 15m
-      {{else}}
-      tuningSet: default
-      operationTimeout: {{AddInt (DivideInt $saturationTime 4) 900}}s
-      {{end}}
-      randomScaleFactor: {{$RANDOM_SCALE_FACTOR}}
-      testMaxReplicaFactor: {{$RANDOM_SCALE_FACTOR}}
-      daemonSetImage: {{$latencyPodImage}}
-      daemonSetEnv: "after update"
-      daemonSetReplicas: 1
-      bigDeploymentSize: {{$BIG_GROUP_SIZE}}
-      bigDeploymentsPerNamespace: {{$bigDeploymentsPerNamespace}}
-      mediumDeploymentSize: {{$MEDIUM_GROUP_SIZE}}
-      mediumDeploymentsPerNamespace: {{$mediumDeploymentsPerNamespace}}
-      smallDeploymentSize: {{$SMALL_GROUP_SIZE}}
-      smallDeploymentsPerNamespace: {{$smallDeploymentsPerNamespace}}
-      smallStatefulSetSize: {{$SMALL_GROUP_SIZE}}
-      smallStatefulSetsPerNamespace: {{$SMALL_STATEFUL_SETS_PER_NAMESPACE}}
-      mediumStatefulSetSize: {{$MEDIUM_GROUP_SIZE}}
-      mediumStatefulSetsPerNamespace: {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE}}
-      bigJobSize: {{$BIG_GROUP_SIZE}}
-      bigJobsPerNamespace: {{$bigJobsPerNamespace}}
-      mediumJobSize: {{$MEDIUM_GROUP_SIZE}}
-      mediumJobsPerNamespace: 1
-      smallJobSize: {{$SMALL_GROUP_SIZE}}
-      smallJobsPerNamespace: 1
+# - module:
+#     path: /modules/reconcile-objects.yaml
+#     params:
+#       actionName: "scale and update"
+#       namespaces: {{$namespaces}}
+#       {{if $RATE_LIMIT_POD_CREATION}}
+#       tuningSet: RandomizedScalingTimeLimited
+#       operationTimeout: 15m
+#       {{else}}
+#       tuningSet: default
+#       operationTimeout: {{AddInt (DivideInt $saturationTime 4) 900}}s
+#       {{end}}
+#       randomScaleFactor: {{$RANDOM_SCALE_FACTOR}}
+#       testMaxReplicaFactor: {{$RANDOM_SCALE_FACTOR}}
+#       daemonSetImage: {{$latencyPodImage}}
+#       daemonSetEnv: "after update"
+#       daemonSetReplicas: 1
+#       bigDeploymentSize: {{$BIG_GROUP_SIZE}}
+#       bigDeploymentsPerNamespace: {{$bigDeploymentsPerNamespace}}
+#       mediumDeploymentSize: {{$MEDIUM_GROUP_SIZE}}
+#       mediumDeploymentsPerNamespace: {{$mediumDeploymentsPerNamespace}}
+#       smallDeploymentSize: {{$SMALL_GROUP_SIZE}}
+#       smallDeploymentsPerNamespace: {{$smallDeploymentsPerNamespace}}
+#       smallStatefulSetSize: {{$SMALL_GROUP_SIZE}}
+#       smallStatefulSetsPerNamespace: {{$SMALL_STATEFUL_SETS_PER_NAMESPACE}}
+#       mediumStatefulSetSize: {{$MEDIUM_GROUP_SIZE}}
+#       mediumStatefulSetsPerNamespace: {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE}}
+#       bigJobSize: {{$BIG_GROUP_SIZE}}
+#       bigJobsPerNamespace: {{$bigJobsPerNamespace}}
+#       mediumJobSize: {{$MEDIUM_GROUP_SIZE}}
+#       mediumJobsPerNamespace: 1
+#       smallJobSize: {{$SMALL_GROUP_SIZE}}
+#       smallJobsPerNamespace: 1
 
 - module:
     path: /modules/reconcile-objects.yaml
