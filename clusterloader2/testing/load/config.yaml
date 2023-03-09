@@ -254,15 +254,15 @@ steps:
 # # END scheduler throughput
 # {{end}}
 
-# {{if not $IS_SMALL_CLUSTER}}
-# # TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
-# - module:
-#     path: modules/pod-startup-latency.yaml
-#     params:
-#       namespaces: {{$namespaces}}
-#       minPodsInSmallCluster: {{$MIN_PODS_IN_SMALL_CLUSTERS}}
-#       image: {{$latencyPodImage}}
-# {{end}}
+{{if not $IS_SMALL_CLUSTER}}
+# TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
+- module:
+    path: modules/pod-startup-latency.yaml
+    params:
+      namespaces: {{$namespaces}}
+      minPodsInSmallCluster: {{$MIN_PODS_IN_SMALL_CLUSTERS}}
+      image: {{$latencyPodImage}}
+{{end}}
 
 # - module:
 #     path: /modules/reconcile-objects.yaml
