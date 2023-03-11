@@ -96,12 +96,12 @@ tuningSets:
 - name: RandomizedSaturationTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$saturationTime}}s
-- name: RandomizedScalingTimeLimited
-  RandomizedTimeLimitedLoad:
-    # The expected number of created/deleted pods is totalPods/4 when scaling,
-    # as each RS changes its size from X to a uniform random value in [X/2, 3X/2].
-    # To match 10 [pods/s] requirement, we need to divide saturationTime by 4.
-    timeLimit: {{DivideInt $saturationTime 4}}s
+# - name: RandomizedScalingTimeLimited
+#   RandomizedTimeLimitedLoad:
+#     # The expected number of created/deleted pods is totalPods/4 when scaling,
+#     # as each RS changes its size from X to a uniform random value in [X/2, 3X/2].
+#     # To match 10 [pods/s] requirement, we need to divide saturationTime by 4.
+#     timeLimit: {{DivideInt $saturationTime 4}}s
 - name: RandomizedDeletionTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$deletionTime}}s
