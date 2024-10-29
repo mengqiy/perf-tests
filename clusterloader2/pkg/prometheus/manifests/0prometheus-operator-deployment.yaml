@@ -65,3 +65,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: prometheus-operator
+      tolerations:
+        - key: monitoring
+          operator: Exists
+          effect: NoSchedule

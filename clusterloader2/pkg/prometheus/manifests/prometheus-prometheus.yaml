@@ -85,3 +85,26 @@ spec:
     name: windows-scrape-configs
     key: windows-scrape-configs.yaml
   {{end}}
+  containers:
+    - name: aws-sigv4-proxy-sidecar
+      image: public.ecr.aws/aws-observability/aws-sigv4-proxy:1.0
+      args:
+        - --name
+        - aps
+        - --region
+        - us-west-2
+        - --host
+        - aps-workspaces.us-west-2.amazonaws.com
+        - --port
+        - :8005
+      ports:
+        - name: aws-sigv4-proxy
+          containerPort: 8005
+  remoteWrite:
+    - url: http://localhost:8005/workspaces/ws-9364cdaa-8de5-4fbd-8a40-b3192865ceaa/api/v1/remote_write
+      queueConfig:
+        capacity: 2500
+        maxSamplesPerSend: 1000
+        maxShards: 200
+  externalLabels:
+    cluster_name: awscli-eks-load-5k-v131-slos

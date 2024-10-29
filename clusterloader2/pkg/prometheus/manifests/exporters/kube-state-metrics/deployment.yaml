@@ -51,3 +51,7 @@ spec:
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: kube-state-metrics
+      tolerations:
+        - key: monitoring
+          operator: Exists
+          effect: NoSchedule
